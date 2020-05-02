@@ -1,6 +1,8 @@
 # optimize
 
-## Test function
+##測試功能
+
+.. figure:: https://www.sfu.ca/~ssurjano/ackley.png
 
 
 ## optimization method
