@@ -1,8 +1,8 @@
 # optimize
 
-##測試功能
+## Test function
 
-.. figure:: https://www.sfu.ca/~ssurjano/ackley.png
+![image]（https://github.com/bing-wei/optimize/blob/master/ackley.png）
 
 
 ## optimization method
