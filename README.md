@@ -1,2 +1,13 @@
 # optimize
-## function
+
+## Test function
+
+
+## optimization method
+
+### DE
+
+### PSO
+
+### APSO
+
