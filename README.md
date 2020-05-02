@@ -2,7 +2,7 @@
 
 ## Test function
 
-![image]（https://github.com/bing-wei/optimize/blob/master/ackley.png）
+![image](https://github.com/bing-wei/optimize/blob/master/ackley.png)
 
 
 ## optimization method
