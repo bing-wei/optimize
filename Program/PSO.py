@@ -46,6 +46,8 @@ class PSO():
         self.best = np.where(change, new_pop, self.pop)
         self.global_best = self.best[np.argmin(self.fitness)]
         self.pop = new_pop
+
+        
         
     def exceed_bound(self,pop):
         new_pop = np.random.rand(self.pN, self.dim) * self.diff + self.lowbound

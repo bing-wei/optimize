@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+
 HW2
 
 ACKLEY FUNCTION
@@ -30,8 +31,9 @@ if __name__ == '__main__':
     DE_opt = DE(bounds,DE_pop,dim,function)
     DE_bestpoint, DE_bestfitness, DE_his = DE_opt.fit()
     plt.figure()
-    plt.plot(range(len(DE_his)),DE_his)
+    plt.plot(range(len(DE_his)),DE_his,label='DE')
     PSO_pop = 1000
-    model = PSO(bounds, PSO_pop, DE_pop)
+    model = PSO(bounds, PSO_pop, dim, function)
     PSO_bestpoint, PSO_bestfitness, PSO_his = model.fit()
-    plt.plot(range(len(PSO_his)),PSO_his)
+    plt.plot(range(len(PSO_his)),PSO_his,label='PSO')
+    plt.legend()
