@@ -4,6 +4,13 @@ ACKLEY FUNCTION
 """
 import numpy as np
 def ackley(x, a=20, b=0.2, c=2*np.pi):
+    '''
+    x = np.array((your N, your dim))  #input is matrix of n*d
+        or 
+        list[x1, x2, x3, x4,......,xd] 
+    
+    output = np.array((your N, fitness))   #it is matrix of n*1. 
+    '''
     if type(x) != np.ndarray:
         x = np.array(x).reshape(1,-1)
     d = x.shape[1]

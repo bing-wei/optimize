@@ -22,7 +22,9 @@ class DE():
         self.diff = abs(self.upbound - self.lowbound) #Full distance
         self.fun = fun #your function
         
+        self.call_num = 0
     def function(self, x):
+        self.call_num += x.shape[0]
         return self.fun(x)
     
     def init_Population(self):
@@ -30,7 +32,9 @@ class DE():
         self.fitness = self.function(self.pop)
         self.best_idx = np.argmin(self.fitness)
         self.best = self.pop[self.best_idx]
-        self.history = []
+        self.history = [self.fitness[self.best_idx].item()]
+        self.pop_history = [self.pop]
+        self.call_num = 0
         
     def iterator(self):
         ids = np.random.randint(self.pN, size=(3, self.pN))
@@ -56,15 +60,18 @@ class DE():
         for its in range(self.its):
             self.iterator()
             self.history.append(self.fitness[self.best_idx].item())
+            self.pop_history.append(self.pop)
         return self.best, self.fitness[self.best_idx], self.history
 #%%
 if __name__ == '__main__' :
     start = time()
-    bounds = (50,-50)
+    bounds = (40,-40)
     population = 40
     Dimension = 20
-    model = DE(bounds, population, Dimension)
-    bestpoint, bestfitness, his = model.fit()
+    DE_opt = DE(bounds, population, Dimension, its=2500)
+    bestpoint, bestfitness, his = DE_opt.fit()
     end = time()
     print('total time:%4.2fs'%(end-start))
+    print('DE call ackley function:%6d'%DE_opt.call_num)
+    print('best fitness:%2.4f'%bestfitness)
     plt.plot(range(len(his)),his)

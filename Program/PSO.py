@@ -20,8 +20,11 @@ class PSO():
         self.dim = dim #Dimension
         self.diff = abs(self.upbound - self.lowbound) #Full distance
         self.fun = fun
+        self.call_num = 0
+
 
     def function(self, x):
+        self.call_num += x.shape[0]
         return self.fun(x)
     
     def init_Population(self):
@@ -30,7 +33,9 @@ class PSO():
         self.fitness = self.function(self.pop)
         self.best = self.pop
         self.global_best = self.pop[np.argmin(self.fitness)]
-        self.history = []
+        self.history = [self.fitness[np.argmin(self.fitness)]]
+        self.pop_history = [self.pop]
+        self.call_num = 0
         
     def iterator(self):
         #velocity vector
@@ -60,6 +65,7 @@ class PSO():
         for its in range(self.its):
             self.iterator()
             self.history.append(self.fitness[np.argmin(self.fitness)].item())
+            self.pop_history.append(self.pop)
         return self.global_best, self.fitness[np.argmin(self.fitness)], self.history
         
 #%%
@@ -68,9 +74,11 @@ if __name__ == '__main__':
     bounds = (40,-40)
     population = 1000
     Dimension = 10
-    model = PSO(bounds, population, Dimension, its=1000)
-    bestpoint, bestfitness, his = model.fit()
+    PSO_opt = PSO(bounds, population, Dimension, its=100)
+    bestpoint, bestfitness, his = PSO_opt.fit()
     end = time()
     print('total time:%4.2fs'%(end-start))
+    print('PSO call ackley function:%6d'%PSO_opt.call_num)
+    print('best fitness:%2.4f'%bestfitness)
     plt.plot(range(len(his)),his)
 
