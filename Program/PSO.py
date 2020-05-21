@@ -11,15 +11,29 @@ from ackley import ackley
 
 class PSO():
     def __init__(self, bounds, popN, dim, fun=ackley, its=1000):
+        '''
+        parameter of Particle Swarm Optimization
+        alpha:
+            learning parameters. Usually set to 2.
+        beta:
+            acceleration constants.  Usually set to 2.
+        seta:
+            sita can set None or [0.5~0.9].
+        '''
         self.alpha = 2
         self.beta = 2
+        self.seta = None
+        
+        #set bounds
         self.upbound = max(bounds)
         self.lowbound = min(bounds)
+        self.diff = abs(self.upbound - self.lowbound) #Full distance
+        
         self.its = its
         self.pN = popN #Number of use points
         self.dim = dim #Dimension
-        self.diff = abs(self.upbound - self.lowbound) #Full distance
         self.fun = fun
+        
         self.call_num = 0
 
 
@@ -30,18 +44,22 @@ class PSO():
     def init_Population(self):
         self.velocity = np.zeros((self.pN, self.dim))
         self.pop = np.random.rand(self.pN, self.dim) * self.diff + self.lowbound
+        self.call_num = 0
         self.fitness = self.function(self.pop)
         self.best = self.pop
         self.global_best = self.pop[np.argmin(self.fitness)]
         self.history = [self.fitness[np.argmin(self.fitness)]]
         self.pop_history = [self.pop]
-        self.call_num = 0
+        
         
     def iterator(self):
         #velocity vector
         velocity_1 = self.alpha * np.random.rand(self.pN, 1) * (self.global_best - self.pop) 
         velocity_2 = self.beta * np.random.rand(self.pN, 1) * (self.best - self.pop) 
-        self.velocity = self.velocity + velocity_1 + velocity_2
+        if self.seta != None :
+            self.velocity = self.velocity * self.seta + velocity_1 + velocity_2
+        else:
+            self.velocity = self.velocity + velocity_1 + velocity_2
         
         #new population
         new_pop = self.exceed_bound(self.pop + self.velocity)
@@ -55,6 +73,10 @@ class PSO():
         
         
     def exceed_bound(self,pop):
+        '''
+        if pop exceed bound for any dimension.
+        set the dimension will random in bounds.
+        '''
         new_pop = np.random.rand(self.pN, self.dim) * self.diff + self.lowbound
         pop_bool = ((pop < self.lowbound)|(pop > self.upbound))
         pop = np.where(pop_bool, new_pop, pop)
@@ -73,8 +95,9 @@ if __name__ == '__main__':
     start = time()
     bounds = (40,-40)
     population = 1000
-    Dimension = 10
-    PSO_opt = PSO(bounds, population, Dimension, its=100)
+    Dimension = 20
+    PSO_opt = PSO(bounds, population, Dimension)
+    PSO_opt.seta = 0.7
     bestpoint, bestfitness, his = PSO_opt.fit()
     end = time()
     print('total time:%4.2fs'%(end-start))
