@@ -7,7 +7,7 @@ import numpy as np
 from time import time
 import matplotlib.pyplot as plt
 
-from ackley import ackley
+from util import ackley
 
 class PSO():
     def __init__(self, bounds, popN, dim, fun=ackley, its=1000):

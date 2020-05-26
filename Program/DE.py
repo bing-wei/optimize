@@ -7,7 +7,7 @@ import numpy as np
 from time import time
 import matplotlib.pyplot as plt
 
-from ackley import ackley
+from util import ackley
 
 #%%Differential Evolution
 class DE():
@@ -90,7 +90,7 @@ if __name__ == '__main__' :
     start = time()
     bounds = (40,-40)
     population = 40
-    Dimension = 20
+    Dimension = 2
     DE_opt = DE(bounds, population, Dimension, its=2499)
     bestpoint, bestfitness, his = DE_opt.fit()
     end = time()

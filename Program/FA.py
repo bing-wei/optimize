@@ -7,7 +7,7 @@ import numpy as np
 from time import time
 import matplotlib.pyplot as plt
 
-from ackley import ackley
+from util import ackley
 #%%
 class FA():
     def __init__(self, bounds, popN, dim, fun=ackley, its=1000):
@@ -25,7 +25,7 @@ class FA():
         '''
         self.inif_alpha = 0.2 
         self.beta = 1  
-        self.grmma = 0.5
+        self.grmma = 1
         self.seta = None
         
         #set bounds
@@ -68,9 +68,9 @@ class FA():
                              self.alpha*(np.random.rand(1, self.dim)-0.5) * self.diff) 
                              
                     self.fitness[i] = self.function(self.pop[i].reshape(1,-1))
-                if self.call_num >= self.break_num:
+                if self.call_num == self.break_num:
                     break
-            if self.call_num >= self.break_num:
+            if self.call_num == self.break_num:
                 break
         #set alpha epoch by t.
         if self.seta != None:
@@ -94,7 +94,7 @@ class FA():
         self.init_Population()
         for its in range(self.its):
             self.iterator()
-            if self.call_num >= self.break_num :
+            if self.call_num == self.break_num :
                 break
         return self.global_best, self.fitness[np.argmin(self.fitness)], self.history
                 
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     start = time()
     function = ackley
     bounds = (40, -40)
-    dim = 10
+    dim = 2
     pop = 40
 
     FA_opt = FA(bounds, pop, dim, function)
