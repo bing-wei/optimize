@@ -1,8 +1,29 @@
-# -*- coding: utf-8 -*-
 """
-ACKLEY FUNCTION
+Created on Fri May 15 21:33:57 2020
+
+@author: wei
 """
+
 import numpy as np
+import math
+
+'''
+levy distribution
+'''
+
+def levy_flight(n, dim, Lambda=1.5):
+    sigma1 = np.power((math.gamma(1 + Lambda) * np.sin((np.pi * Lambda) / 2)) \
+                      / math.gamma((1 + Lambda) / 2) * np.power(2, (Lambda - 1) / 2), 1 / Lambda)
+    sigma2 = 1
+    u = np.random.randn(n, dim) * np.sqrt(sigma1)
+    v = np.random.randn(n, dim)
+    step = u / np.power(np.fabs(v), 1 / Lambda)
+    return step    
+
+
+'''
+function
+'''
 def ackley(x, a=20, b=0.2, c=2*np.pi):
     '''
     x = np.array((your N, your dim))  #input is matrix of n*d
