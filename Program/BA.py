@@ -68,7 +68,7 @@ class BA():
         newpop = np.where(np.random.rand(self.pN, 1) > self.r,
                           newpop,
                           self.best_pop.reshape(-1, self.dim).repeat(self.pN, axis=0) + \
-                              0.01 * np.random.randn(self.pN, self.dim) * self.diff)
+                              0.01 * np.random.randn(self.pN, self.dim))
         newfitness = self.function(newpop)
         
         #If new fitness is better point and U(0,1) > A, change to new pop.
@@ -106,9 +106,10 @@ class BA():
 if __name__ == '__main__':
     start = time()
     bounds = (40,-40)
-    population = 50
-    Dimension = 10
-    BA_opt = BA(bounds, population, Dimension, its=10000)
+    population = 40
+    Dimension = 2
+    
+    BA_opt = BA(bounds, population, Dimension, its=2499)
     bestpoint, bestfitness, his = BA_opt.fit()
     end = time()
     print('total time:%4.2fs'%(end-start))
